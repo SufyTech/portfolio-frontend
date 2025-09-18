@@ -8,6 +8,8 @@ const ResumeRequestModal = ({ isOpen, onClose }) => {
   const [status, setStatus] = useState("");
   const [statusType, setStatusType] = useState("");
 
+  const backendURL = import.meta.env.VITE_BACKEND_URL;
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setStatus("Sending request...");
@@ -29,11 +31,13 @@ const ResumeRequestModal = ({ isOpen, onClose }) => {
         setName("");
         setEmail("");
       } else {
-        setStatus("❌ Something went wrong. Try again!");
+        const data = await res.json();
+        setStatus(`❌ Error: ${data.message || "Something went wrong"}`);
         setStatusType("error");
       }
     } catch (err) {
-      setStatus("❌ Network error! Try again.");
+      console.error(err);
+      setStatus("❌ Network error! Please try again.");
       setStatusType("error");
     }
   };
