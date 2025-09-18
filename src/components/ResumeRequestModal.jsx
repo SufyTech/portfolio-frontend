@@ -16,14 +16,11 @@ const ResumeRequestModal = ({ isOpen, onClose }) => {
     setStatusType("");
 
     try {
-      const res = await fetch(
-        `${import.meta.env.VITE_BACKEND_URL}/request-resume`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ name, email }),
-        }
-      );
+      const res = await fetch(`${backendURL}/request-resume`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, email }),
+      });
 
       if (res.ok) {
         setStatus("✅ Request submitted! You’ll get the resume once approved.");
